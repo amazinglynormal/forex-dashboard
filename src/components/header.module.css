@@ -1,0 +1,10 @@
+.header {
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.headingText {
+  color: rgb(2, 4, 37);
+  text-align: center;
+}
