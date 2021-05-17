@@ -8,3 +8,13 @@
   color: rgb(2, 4, 37);
   text-align: center;
 }
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: rgb(2, 4, 37);
+  }
+
+  .headingText {
+    color: white;
+  }
+}
