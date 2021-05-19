@@ -2,7 +2,7 @@
   background: #f1f1f1;
   display: grid;
   height: calc(100vh - 77px);
-  max-width: 1800px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: 1rem;
   grid-template-columns: repeat(5, 1fr);
