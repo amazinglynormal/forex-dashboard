@@ -1,11 +1,13 @@
 import styles from "./rate-list.module.css";
-import useRateData from "../hooks/useRateData";
 import { CurrencyListing } from "./CurrencyListing";
+import { RateData } from "../interfaces/RateData.interface";
 
-export const RateList = () => {
-  const rateData = useRateData();
+interface Props {
+  rateListData: RateData[];
+}
 
-  const renderedCurrencies = rateData.map((data) => {
+export const RateList = ({ rateListData }: Props) => {
+  const renderedCurrencies = rateListData.map((data) => {
     return (
       <CurrencyListing
         key={data.symbol}

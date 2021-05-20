@@ -3,15 +3,21 @@ import { Layout } from "../components/Layout";
 import { Converter } from "../converter/Converter";
 import { Graph } from "../graph/Graph";
 import { RateList } from "../rates-list/RateList";
+import useRateData from "../hooks/useRateData";
 
 function App() {
+  const { rateListData, latestRateData, currencyData } = useRateData();
+
   return (
     <>
       <Header headingSize="h1" headingText="Forex Dashboard" />
       <Layout>
-        <RateList />
+        <RateList rateListData={rateListData} />
         <Graph />
-        <Converter />
+        <Converter
+          latestRateData={latestRateData.data}
+          currencies={currencyData.data}
+        />
       </Layout>
     </>
   );
