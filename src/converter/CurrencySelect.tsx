@@ -32,7 +32,13 @@ export const CurrencySelect = ({
       <label className={styles.label} htmlFor={direction}>
         {direction}
       </label>
-      <select name={direction} id={id} onChange={onChangeHandler} value={value}>
+      <select
+        className={styles.select}
+        name={direction}
+        id={id}
+        onChange={onChangeHandler}
+        value={value}
+      >
         {renderedOptions}
       </select>
     </div>
