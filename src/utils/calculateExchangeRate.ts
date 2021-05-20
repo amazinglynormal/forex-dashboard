@@ -14,7 +14,7 @@ const calculateExchangeRate = (
   const euro = amount / fromRate;
   const result = euro * toRate;
 
-  return result;
+  return Math.round((result + Number.EPSILON) * 100) / 100;
 };
 
 export default calculateExchangeRate;
