@@ -59,7 +59,7 @@ const useRateData = () => {
     }
   }
 
-  return { rateListData, latestRateData };
+  return { rateListData, latestRateData, currencyData };
 };
 
 export default useRateData;
