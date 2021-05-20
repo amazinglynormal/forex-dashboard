@@ -1,0 +1,27 @@
+.listing {
+  list-style: none;
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.listingLayout {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.symbol {
+  width: 15%;
+}
+
+.fullName {
+  width: 50%;
+}
+
+.trend {
+  width: 15%;
+}
+
+.latestRate {
+  width: 20%;
+  color: #0a76ce;
+}
