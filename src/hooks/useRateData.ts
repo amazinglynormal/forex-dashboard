@@ -30,7 +30,7 @@ const useRateData = () => {
     `${BASE_URL}/${yesterdayString}`
   );
 
-  const rateData: RateData[] = [];
+  const rateListData: RateData[] = [];
 
   if (currencyData.data && latestRateData.data && previousRateData.data) {
     const symbols = Object.keys(currencyData.data);
@@ -55,11 +55,11 @@ const useRateData = () => {
         trend,
       } as RateData;
 
-      rateData.push(data);
+      rateListData.push(data);
     }
   }
 
-  return rateData;
+  return { rateListData, latestRateData };
 };
 
 export default useRateData;
