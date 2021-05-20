@@ -13,7 +13,12 @@ const useRateData = () => {
 
   const today = new Date();
   const yesterday = new Date();
-  yesterday.setDate(today.getDate() - 1);
+
+  if (today.getHours() < 16) {
+    yesterday.setDate(today.getDate() - 2);
+  } else {
+    yesterday.setDate(today.getDate() - 1);
+  }
   const ydayYear = yesterday.getFullYear();
   const ydayMonth = yesterday.getMonth() + 1;
   const ydayDate = yesterday.getDate();
