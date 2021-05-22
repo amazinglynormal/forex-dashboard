@@ -5,6 +5,8 @@ import calculateExchangeRate from "../utils/calculateExchangeRate";
 import { NumberInput } from "./NumberInput";
 import { Currencies } from "../interfaces/Currencies.interface";
 import { CurrencySelect } from "./CurrencySelect";
+import { ConvertResult } from "./ConvertResult";
+import { Header } from "../components/Header";
 
 interface Props {
   latestRateData: LatestRate | undefined;
@@ -88,8 +90,8 @@ export const Converter = ({ latestRateData, currencies }: Props) => {
   };
 
   return (
-    <div className={styles.converter}>
-      <p>converter</p>
+    <article className={styles.converter}>
+      <Header headingText="Exchange Rate Converter" headingSize="h2" />
       <NumberInput
         id="amount1"
         direction="from"
@@ -116,6 +118,13 @@ export const Converter = ({ latestRateData, currencies }: Props) => {
         direction="to"
         onChangeHandler={onChange}
       />
-    </div>
+      <ConvertResult
+        currencies={currencies}
+        from={exchangeRate.from}
+        to={exchangeRate.to}
+        amount1={exchangeRate.amount1}
+        amount2={exchangeRate.amount2}
+      />
+    </article>
   );
 };
