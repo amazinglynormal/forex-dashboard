@@ -1,13 +1,29 @@
-import styles from "./rate-list.module.css";
+import { Header } from "../components/Header";
 import { CurrencyListing } from "./CurrencyListing";
-import { RateData } from "../interfaces/RateData.interface";
+import styles from "./rate-list.module.css";
+
+import useRateData from "../hooks/useRateData";
+
+import { LatestRate } from "../interfaces/LatestRate.interface";
+import { PreviousRate } from "../interfaces/PreviousRate.interface";
+import { Currencies } from "../interfaces/Currencies.interface";
 
 interface Props {
-  rateListData: RateData[];
+  latestData: LatestRate;
+  previousData: PreviousRate;
+  currencies: Currencies;
+  loading: boolean;
 }
 
-export const RateList = ({ rateListData }: Props) => {
-  const renderedCurrencies = rateListData.map((data) => {
+export const RateList = ({
+  latestData,
+  previousData,
+  currencies,
+  loading,
+}: Props) => {
+  const rateData = useRateData(latestData, previousData, currencies);
+
+  const renderedCurrencies = rateData.map((data) => {
     return (
       <CurrencyListing
         key={data.symbol}
@@ -20,8 +36,9 @@ export const RateList = ({ rateListData }: Props) => {
   });
 
   return (
-    <div className={styles.list}>
+    <article className={styles.list}>
+      <Header headingText="Latest Exchange Rates" headingSize="h2" />
       <ul>{renderedCurrencies}</ul>
-    </div>
+    </article>
   );
 };
