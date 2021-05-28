@@ -4,7 +4,7 @@ import styles from "./converter.module.css";
 import calculateExchangeRate from "../utils/calculateExchangeRate";
 import { NumberInput } from "./NumberInput";
 import { Currencies } from "../interfaces/Currencies.interface";
-import { CurrencySelect } from "./CurrencySelect";
+import { CurrencySelect } from "../components/CurrencySelect";
 import { ConvertResult } from "./ConvertResult";
 import { Header } from "../components/Header";
 
@@ -102,7 +102,7 @@ export const Converter = ({ latestRateData, currencies }: Props) => {
         currencies={currencies}
         id="from"
         value={exchangeRate.from}
-        direction="from"
+        label="from"
         onChangeHandler={onChange}
       />
       <NumberInput
@@ -115,7 +115,7 @@ export const Converter = ({ latestRateData, currencies }: Props) => {
         currencies={currencies}
         id="to"
         value={exchangeRate.to}
-        direction="to"
+        label="to"
         onChangeHandler={onChange}
       />
       <ConvertResult
