@@ -1,121 +1,81 @@
-import {
-  select,
-  scaleLinear,
-  min,
-  max,
-  scaleTime,
-  line,
-  axisLeft,
-  axisBottom,
-} from "d3";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../components/Header";
-import useAxios from "../hooks/useAxios";
+import { CurrencySelect } from "../components/CurrencySelect";
+import { D3LineChart } from "./D3LineChart";
 import styles from "./graph.module.css";
-import { TimeSeries } from "../interfaces/TimeSeries.interface";
-import { BASE_URL } from "../app/constants";
-import { useEffect } from "react";
-import convertDataToArray, { ReturnData } from "../utils/convertDataToArray";
 
-export const Graph = () => {
-  const { status, data } = useAxios<TimeSeries>(
-    `${BASE_URL}/2020-01-01..?to=USD`
-  );
+import fetchTimeSeriesData from "../utils/fetchTimeSeriesData";
+
+import { TimeSeries } from "../interfaces/TimeSeries.interface";
+import { Currencies } from "../interfaces/Currencies.interface";
+
+interface Props {
+  currencies: Currencies;
+  loading: boolean;
+}
+
+const initialData = {
+  amount: 1.0,
+  base: "EUR",
+  start_date: "2020-01-01",
+  end_date: "2020-01-01",
+  rates: {
+    "2020-01-01": {
+      USD: 1.22,
+    },
+  },
+};
+
+export const Graph = ({ currencies, loading }: Props) => {
+  const [currency, setCurrency] = useState("USD");
+  const [timeFrame, setTimeFrame] = useState("2020-01-01..");
+  const [data, setData] = useState<TimeSeries>(initialData);
+
+  const onCurrencyChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setCurrency(e.target.value);
+  };
+
+  const onTimeFrameChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setTimeFrame(e.target.value);
+  };
 
   useEffect(() => {
-    if (status !== "fetched" || !data) {
-      return;
-    }
-
-    const createLineChart = () => {
-      const chartData = convertDataToArray(data, "USD");
-
-      const svg = select("svg").style("border", "1px solid gray");
-
-      const xValue = (d: ReturnData) => d.date;
-      const xAxisLabel = "Time";
-
-      const yValue = (d: ReturnData) => d.value;
-      const yAxisLabel = "Exchange Rate";
-
-      const width = +svg.attr("width");
-      const height = +svg.attr("height");
-      const margin = { top: 20, right: 20, bottom: 100, left: 100 };
-      const innerWidth = width - margin.left - margin.right;
-      const innerHeight = height - margin.top - margin.bottom;
-
-      const minDate = min(chartData.map((d) => d.date));
-      const maxDate = max(chartData.map((d) => d.date));
-
-      const maxValue = max(chartData.map((d) => d.value));
-
-      if (
-        minDate === undefined ||
-        maxDate === undefined ||
-        maxValue === undefined
-      ) {
-        return;
+    const fetchData = async () => {
+      const timeSeriesData = await fetchTimeSeriesData(currency, timeFrame);
+      if (timeSeriesData.data) {
+        setData(timeSeriesData.data);
       }
-
-      const xScale = scaleTime()
-        .domain([minDate, maxDate])
-        .range([0, innerWidth])
-        .nice();
-
-      const yScale = scaleLinear()
-        .domain([0, maxValue])
-        .range([innerHeight, 0])
-        .nice();
-
-      const g = svg
-        .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-      const xAxis = axisBottom(xScale).tickSize(-innerHeight).tickPadding(15);
-      const yAxis = axisLeft(yScale).tickSize(-innerWidth).tickPadding(10);
-
-      const yAxisG = g.append("g").call(yAxis);
-      yAxisG.selectAll(".domain").remove();
-      yAxisG
-        .append("text")
-        .attr("class", styles.axisLabel)
-        .attr("y", -60)
-        .attr("x", -innerHeight / 2)
-        .attr("transform", `rotate(-90)`)
-        .attr("text-anchor", "middle")
-        .text(yAxisLabel);
-
-      const xAxisG = g
-        .append("g")
-        .call(xAxis)
-        .attr("transform", `translate(0,${innerHeight})`);
-
-      xAxisG.select(".domain").remove();
-
-      xAxisG
-        .append("text")
-        .attr("class", styles.axisLabel)
-        .attr("y", 80)
-        .attr("x", innerWidth / 2)
-        .text(xAxisLabel);
-
-      const lineGenerator = line<ReturnData>()
-        .x((d) => xScale(xValue(d)))
-        .y((d) => yScale(yValue(d)));
-
-      const path = lineGenerator(chartData);
-
-      if (!path) return;
-
-      g.append("path").attr("class", styles.linePath).attr("d", path);
     };
 
-    createLineChart();
-  }, [data, status]);
+    fetchData();
+  }, [currency, timeFrame]);
 
   return (
     <article className={styles.graph}>
       <Header headingText="Exchange Rates Over Time" headingSize="h2" />
-      <svg width="900" height="900"></svg>
+      <p>{`timeframe: ${timeFrame} & currency: ${currency}`}</p>
+      <div>
+        <D3LineChart
+          data={data}
+          currency={currency}
+          svgWidth={700}
+          svgHeight={700}
+        />
+      </div>
+      {currencies && (
+        <CurrencySelect
+          id="Select Currency"
+          label="Select Currency"
+          value={currency}
+          onChangeHandler={onCurrencyChange}
+          currencies={currencies}
+          graph={true}
+        />
+      )}
     </article>
   );
 };
