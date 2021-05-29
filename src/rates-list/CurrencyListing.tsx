@@ -1,8 +1,7 @@
-import styles from "./currency-listing.module.css";
-
 import { ArrowUp } from "../components/ArrowUp";
 import { ArrowDown } from "../components/ArrowDown";
 import { Equals } from "../components/Equals";
+import styles from "./currency-listing.module.css";
 
 interface Props {
   symbol: String;
