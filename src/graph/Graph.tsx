@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { CurrencySelect } from "../components/CurrencySelect";
 import { D3LineChart } from "./D3LineChart";
+import { TimeFrameButtons } from "./TimeFrameButtons";
 import styles from "./graph.module.css";
 
 import fetchTimeSeriesData from "../utils/fetchTimeSeriesData";
@@ -37,10 +38,8 @@ export const Graph = ({ currencies, loading }: Props) => {
     setCurrency(e.target.value);
   };
 
-  const onTimeFrameChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setTimeFrame(e.target.value);
+  const onTimeFrameChange = (value: string) => {
+    setTimeFrame(value);
   };
 
   useEffect(() => {
@@ -76,6 +75,7 @@ export const Graph = ({ currencies, loading }: Props) => {
           graph={true}
         />
       )}
+      <TimeFrameButtons onClickHandler={onTimeFrameChange} />
     </article>
   );
 };
