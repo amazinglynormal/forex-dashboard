@@ -16,7 +16,7 @@ const fetchPreviousExchangeRate = async (): Promise<PreviousRateResponse> => {
   const ydayDate = yesterday.getDate();
   const yesterdayString = `${ydayYear}-${
     ydayMonth < 10 ? "0" : ""
-  }${ydayMonth}-${ydayDate}`;
+  }${ydayMonth}-${ydayDate < 10 ? "0" : ""}${ydayDate}`;
 
   const response = await axios.get<PreviousRate>(
     `${BASE_URL}/${yesterdayString}`
