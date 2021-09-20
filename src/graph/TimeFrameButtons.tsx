@@ -1,5 +1,8 @@
 import styles from "./time-frame-buttons.module.css";
 
+import { calculateOneYearAgo } from "../utils/calculateOneYearAgo";
+import { calculateOneMonthAgo } from "../utils/calculateOneMonthAgo";
+
 interface Props {
   onClickHandler: (value: string) => void;
 }
@@ -12,33 +15,6 @@ export const TimeFrameButtons = ({ onClickHandler }: Props) => {
     const month = today.getMonth() + 1;
     const year = today.getFullYear() - 10;
 
-    return `${year}-${month < 10 ? "0" : ""}${month}-${
-      date < 10 ? "0" : ""
-    }${date}..`;
-  };
-
-  const calculateOneYearAgo = () => {
-    const today = new Date();
-
-    const date = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear() - 1;
-
-    return `${year}-${month < 10 ? "0" : ""}${month}-${
-      date < 10 ? "0" : ""
-    }${date}..`;
-  };
-
-  const calculateOneMonthAgo = () => {
-    const today = new Date();
-
-    const date = today.getDate();
-    let month = today.getMonth();
-    const year = today.getFullYear();
-
-    if (month === 0) {
-      month = 12;
-    }
     return `${year}-${month < 10 ? "0" : ""}${month}-${
       date < 10 ? "0" : ""
     }${date}..`;

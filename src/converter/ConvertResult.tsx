@@ -1,5 +1,5 @@
 import { Currencies } from "../interfaces/Currencies.interface";
-// import styles from "./convert-result.module.css";
+import styles from "./convert-result.module.css";
 
 interface Props {
   currencies: Currencies;
@@ -21,7 +21,10 @@ export const ConvertResult = ({
 
   return (
     <div>
-      <p>{`${fromString} is equal to ${toString}`}</p>
+      <p className={styles.result}>
+        {`${fromString}`} <span className={styles.equals}>equals</span>{" "}
+        {`${toString}`}
+      </p>
     </div>
   );
 };

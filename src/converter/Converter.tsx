@@ -1,16 +1,20 @@
 import { ChangeEvent, useState } from "react";
-import { LatestRate } from "../interfaces/LatestRate.interface";
-import styles from "./converter.module.css";
-import calculateExchangeRate from "../utils/calculateExchangeRate";
+
+import { Header } from "../components/Header";
 import { NumberInput } from "./NumberInput";
-import { Currencies } from "../interfaces/Currencies.interface";
 import { CurrencySelect } from "../components/CurrencySelect";
 import { ConvertResult } from "./ConvertResult";
-import { Header } from "../components/Header";
+import styles from "./converter.module.css";
+
+import calculateExchangeRate from "../utils/calculateExchangeRate";
+
+import { LatestRate } from "../interfaces/LatestRate.interface";
+import { Currencies } from "../interfaces/Currencies.interface";
 
 interface Props {
-  latestRateData: LatestRate | undefined;
-  currencies: Currencies | undefined;
+  latestData: LatestRate;
+  currencies: Currencies;
+  loading: boolean;
 }
 
 const initialState = {
@@ -20,18 +24,10 @@ const initialState = {
   amount2: 0,
 };
 
-export const Converter = ({ latestRateData, currencies }: Props) => {
+export const Converter = ({ latestData, currencies, loading }: Props) => {
   const [exchangeRate, setExchangeRate] = useState(initialState);
 
-  if (!latestRateData || !currencies) {
-    return (
-      <div className={styles.converter}>
-        <p>Something went wrong</p>
-      </div>
-    );
-  }
-
-  const rates = latestRateData.rates;
+  const rates = latestData.rates;
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const id = e.target.id;
@@ -92,32 +88,38 @@ export const Converter = ({ latestRateData, currencies }: Props) => {
   return (
     <article className={styles.converter}>
       <Header headingText="Exchange Rate Converter" headingSize="h2" />
-      <NumberInput
-        id="amount1"
-        direction="from"
-        value={exchangeRate.amount1}
-        onChangeHandler={onChange}
-      />
-      <CurrencySelect
-        currencies={currencies}
-        id="from"
-        value={exchangeRate.from}
-        label="from"
-        onChangeHandler={onChange}
-      />
-      <NumberInput
-        id="amount2"
-        direction="to"
-        value={exchangeRate.amount2}
-        onChangeHandler={onChange}
-      />
-      <CurrencySelect
-        currencies={currencies}
-        id="to"
-        value={exchangeRate.to}
-        label="to"
-        onChangeHandler={onChange}
-      />
+      <div className={styles.inputContainer}>
+        <div className={styles.from}>
+          <NumberInput
+            id="amount1"
+            direction="from"
+            value={exchangeRate.amount1}
+            onChangeHandler={onChange}
+          />
+          <CurrencySelect
+            currencies={currencies}
+            id="from"
+            value={exchangeRate.from}
+            label="from"
+            onChangeHandler={onChange}
+          />
+        </div>
+        <div className={styles.to}>
+          <NumberInput
+            id="amount2"
+            direction="to"
+            value={exchangeRate.amount2}
+            onChangeHandler={onChange}
+          />
+          <CurrencySelect
+            currencies={currencies}
+            id="to"
+            value={exchangeRate.to}
+            label="to"
+            onChangeHandler={onChange}
+          />
+        </div>
+      </div>
       <ConvertResult
         currencies={currencies}
         from={exchangeRate.from}

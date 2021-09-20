@@ -6,6 +6,8 @@ import { TimeFrameButtons } from "./TimeFrameButtons";
 import styles from "./graph.module.css";
 
 import fetchTimeSeriesData from "../utils/fetchTimeSeriesData";
+import { calculateOneYearAgo } from "../utils/calculateOneYearAgo";
+// import useGraphSize from "../hooks/useGraphSize";
 
 import { TimeSeries } from "../interfaces/TimeSeries.interface";
 import { Currencies } from "../interfaces/Currencies.interface";
@@ -28,9 +30,11 @@ const initialData = {
 };
 
 export const Graph = ({ currencies, loading }: Props) => {
+  const oneYearAgo = calculateOneYearAgo();
   const [currency, setCurrency] = useState("USD");
-  const [timeFrame, setTimeFrame] = useState("2020-01-01..");
+  const [timeFrame, setTimeFrame] = useState(oneYearAgo);
   const [data, setData] = useState<TimeSeries>(initialData);
+  // const graphSize = useGraphSize();
 
   const onCurrencyChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -62,7 +66,7 @@ export const Graph = ({ currencies, loading }: Props) => {
           data={data}
           currency={currency}
           svgWidth={700}
-          svgHeight={700}
+          svgHeight={500}
         />
       </div>
       {currencies && (

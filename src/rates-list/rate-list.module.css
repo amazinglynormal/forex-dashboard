@@ -1,6 +1,15 @@
-.list {
+.rateList {
   background-color: white;
-  grid-column: 1 / span 2;
-  grid-row: 1 / span 5;
+  border: 1px black solid;
+  height: calc(100vh - 77px);
+  width: 100%;
+  border-radius: 6px;
   overflow-y: scroll;
+}
+
+@media (min-width: 900px) {
+  .rateList {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 5;
+  }
 }

@@ -15,5 +15,11 @@ export const Header = ({ headingSize, headingText }: Props) => {
     h6: <h6 className={styles.headingText}>{headingText}</h6>,
   };
 
-  return <header className={styles.header}>{headings[headingSize]}</header>;
+  return (
+    <header
+      className={headingSize === "h1" ? styles.header : styles.widgetHeader}
+    >
+      {headings[headingSize]}
+    </header>
+  );
 };

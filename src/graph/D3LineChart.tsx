@@ -70,8 +70,10 @@ export const D3LineChart = ({ data, currency, svgWidth, svgHeight }: Props) => {
     const xAxis = axisBottom(xScale).tickSize(-innerHeight).tickPadding(15);
     const yAxis = axisLeft(yScale).tickSize(-innerWidth).tickPadding(10);
 
-    const yAxisG = g.append("g").call(yAxis);
+    const yAxisG = g.append("g").call(yAxis).attr("class", styles.yAxisG);
+
     yAxisG.selectAll(".domain").remove();
+
     yAxisG
       .append("text")
       .attr("class", styles.axisLabel)
@@ -84,9 +86,10 @@ export const D3LineChart = ({ data, currency, svgWidth, svgHeight }: Props) => {
     const xAxisG = g
       .append("g")
       .call(xAxis)
+      .attr("class", styles.xAxisG)
       .attr("transform", `translate(0,${innerHeight})`);
 
-    xAxisG.select(".domain").remove();
+    xAxisG.selectAll(".domain").remove();
 
     xAxisG
       .append("text")

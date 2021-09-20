@@ -36,9 +36,9 @@ export const RateList = ({
   });
 
   return (
-    <article className={styles.list}>
+    <article className={styles.rateList}>
       <Header headingText="Latest Exchange Rates" headingSize="h2" />
-      <ul>{renderedCurrencies}</ul>
+      <ul className={styles.list}>{renderedCurrencies}</ul>
     </article>
   );
 };

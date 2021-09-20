@@ -1,12 +1,12 @@
 .listing {
   list-style: none;
-  border-bottom: 1px solid rgb(185, 185, 185);
+  border-bottom: 1px solid #ccc;
 }
 
 .listingLayout {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .symbol {

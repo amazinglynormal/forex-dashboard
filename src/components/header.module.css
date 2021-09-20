@@ -1,12 +1,21 @@
+.header,
+.widgetHeader {
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+}
+
 .header {
   background-color: white;
-  border-bottom: 1px solid #eee;
-  padding: 1rem 0;
+}
+
+.widgetHeader {
+  background-color: transparent;
 }
 
 .headingText {
   color: rgb(2, 4, 37);
   text-align: center;
+  padding: 0.8rem 0;
 }
 
 @media (prefers-color-scheme: dark) {

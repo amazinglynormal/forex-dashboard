@@ -1,0 +1,13 @@
+.graph {
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: white;
+  height: calc(100vh - 77px);
+}
+
+@media (min-width: 900px) {
+  .graph {
+    grid-column: 3 / span 3;
+    grid-row: 1 / span 3;
+  }
+}

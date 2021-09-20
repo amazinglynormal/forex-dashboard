@@ -1,0 +1,28 @@
+.linePath {
+  fill: none;
+  stroke: #0a76ce;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.axisLabel {
+  font-size: 1rem;
+  fill: #8e8883;
+}
+
+/* .yAxisG,
+.xAxisG {
+  color: #eee;
+} */
+
+g g g:first-of-type {
+  color: rgb(19, 19, 19);
+}
+
+g g g {
+  color: #eee;
+}
+
+g g g text {
+  color: rgb(19, 19, 19);
+}
